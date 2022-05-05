@@ -32,8 +32,9 @@ sudo rm rootfs/lib/modules/5.17.0-rc2-379425-g06b026a8b714/source
 sudo depmod -a -b rootfs 5.17.0-rc2-379425-g06b026a8b714
 sudo sh -c 'echo "8723ds" >> rootfs/etc/modules'
 
-echo "Set root user password to: licheerv"
-sudo sed -i 's/^root.*$/root:$1$root$sOsYxD2g.F8d7oZbbEt.m1:19072:0:99999:7:::/' rootfs/etc/shadow
+#echo "Set root user password to: 100ask"
+sudo sed  's%^root:[^:]*:%root:$6$QkgMDDAP$qSmQAFBZTsFXCDFxK.Rwsy4Ik.J\/bSzsI6fW.fSX5kzEW4YRWTgJpzo8c9YTMm3XTkjsNgcudaUN7ha624PHh0:%' rootfs/etc/shadow
+
 sudo cp fstab rootfs/etc/
 
 sudo rm -f /tmp/wlan0_contents
@@ -46,8 +47,8 @@ EOF
 sudo cp /tmp/wlan0_contents rootfs/etc/network/interfaces.d/
 sudo rm /tmp/wlan0_contents
 
-echo "Set host name to 'licheerv'"
-sudo sh -c 'echo licheerv > rootfs/etc/hostname'
+echo "Set host name to 'NezhaSTU'"
+sudo sh -c 'echo nezhastu > rootfs/etc/hostname'
 sudo sh -c 'echo "@reboot for i in 1 2 3 4 5; do /usr/sbin/ntpdate 0.europe.pool.ntp.org && break || sleep 15; done" >> rootfs/var/spool/cron/crontabs/root'
 sudo chmod 600 rootfs/var/spool/cron/crontabs/root
 
