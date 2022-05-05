@@ -1,11 +1,5 @@
-
 name: Auto Build DshanNezhaSTU Release Linux system.
-
-on:
-  push:
-    tags:
-       - '*'
-
+on: workflow_dispatch
 jobs:
   build-all-os:
     runs-on:  debian10
