@@ -32,25 +32,21 @@ popd
 echo "Build u-boot binary"
 pushd u-boot
 make CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- nezha_defconfig
-make CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- nezha_defconfig
 make -j `nproc` ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- all V=1
 popd
 
 echo "Generate u-boot table of contents"
-./u-boot/tools/mkimage -T sunxi_toc1 -d licheerv_toc1.cfg u-boot.toc1
+./u-boot/tools/mkimage -T sunxi_toc1 -d nezha_toc1.cfg u-boot.toc1
+
+
 
 echo "Build Linux kernel"
 mkdir -p linux-build/arch/riscv/configs
-cp licheerv_linux_defconfig linux-build/arch/riscv/configs/licheerv_defconfig
-make ARCH=riscv -C linux O=$cwd/linux-build licheerv_defconfig
+cp nezhastu_linux_defconfig linux-build/arch/riscv/configs/nezhastu_linux_defconfig
+make ARCH=riscv -C linux O=$cwd/linux-build nezhastu_linux_defconfig
 make -j `nproc` -C linux-build ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- V=1
 
-echo "Build Realtek 8723DS WiFi Driver"
-pushd rtl8723ds
-make -j `nproc` ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- KSRC=$cwd/linux-build modules
-popd
-
 echo "Generate u-boot script"
-./u-boot/tools/mkimage -T script -O linux -d licheerv_u-boot-bootscr.txt boot.scr
+./u-boot/tools/mkimage -T script -O linux -d nezhastu_uboot-bootscr.txt  boot.scr
 
 echo "Successfully finished build process"

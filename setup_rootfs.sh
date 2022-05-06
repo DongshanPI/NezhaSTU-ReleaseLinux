@@ -26,11 +26,11 @@ pushd linux-build
 sudo make modules_install ARCH=riscv INSTALL_MOD_PATH=../rootfs KERNELRELEASE=5.17.0-rc2-379425-g06b026a8b714
 popd
 
-sudo install -D -p -m 644 rtl8723ds/8723ds.ko rootfs/lib/modules/5.17.0-rc2-379425-g06b026a8b714/kernel/drivers/net/wireless/8723ds.ko
+
 sudo rm rootfs/lib/modules/5.17.0-rc2-379425-g06b026a8b714/build
 sudo rm rootfs/lib/modules/5.17.0-rc2-379425-g06b026a8b714/source
 sudo depmod -a -b rootfs 5.17.0-rc2-379425-g06b026a8b714
-sudo sh -c 'echo "8723ds" >> rootfs/etc/modules'
+
 
 #echo "Set root user password to: 100ask"
 sudo sed  's%^root:[^:]*:%root:$6$QkgMDDAP$qSmQAFBZTsFXCDFxK.Rwsy4Ik.J\/bSzsI6fW.fSX5kzEW4YRWTgJpzo8c9YTMm3XTkjsNgcudaUN7ha624PHh0:%' rootfs/etc/shadow
