@@ -30,12 +30,9 @@ sudo mkfs.ext4 $partBoot
 echo "Copy files to /boot partition"
 sudo mount -t ext4  $partBoot /mnt/sdcard_boot
 
-sudo cp linux-build/arch/riscv/boot/Image.gz /mnt/sdcard_boot
-sudo cp boot.scr /mnt/sdcard_boot
-sudo sync
-sudo cp linux-build/arch/riscv/boot/Image /mnt/sdcard_boot
-sudo cp linux-build/arch/riscv/boot/dts/allwinner/sun20i-d1-nezha.dtb /mnt/sdcard_boot
-#sudo cp -rf extlinux/  /mnt/sdcard_boot
+sudo cp -rfv linux/arch/riscv/boot/Image.gz /mnt/sdcard_boot
+sudo cp -rfv boot.scr /mnt/sdcard_boot
+sudo cp -rfv linux/arch/riscv/boot/dts/allwinner/sun20i-d1-nezha.dtb /mnt/sdcard_boot
 sudo sync
 sudo umount /mnt/sdcard_boot
 

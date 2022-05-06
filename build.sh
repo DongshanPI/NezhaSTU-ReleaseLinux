@@ -3,7 +3,7 @@
 set -eou pipefail
 
 echo "Updating all git submodules"
-git submodule update --init --recursive
+#git submodule update --init --recursive
 
 cwd=`pwd`
 
@@ -41,10 +41,14 @@ echo "Generate u-boot table of contents"
 
 
 echo "Build Linux kernel"
-mkdir -p linux-build/arch/riscv/configs
-cp nezhastu_linux_defconfig linux-build/arch/riscv/configs/nezhastu_linux_defconfig
-make ARCH=riscv -C linux O=$cwd/linux-build nezhastu_linux_defconfig
-make -j `nproc` -C linux-build ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- V=1
+pushd  linux
+cp ../nezhastu_linux_defconfig arch/riscv/configs/nezhastu_linux_defconfig
+make ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu-  nezhastu_linux_defconfig
+
+make -j `nproc`  ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- all V=1
+
+make -j `nproc`  ARCH=riscv CROSS_COMPILE=$cwd/riscv64-unknown-linux-gnu/bin/riscv64-unknown-linux-gnu- dtbs
+pushd
 
 echo "Generate u-boot script"
 ./u-boot/tools/mkimage -T script -O linux -d nezhastu_uboot-bootscr.txt  boot.scr
