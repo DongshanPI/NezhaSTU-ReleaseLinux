@@ -3,7 +3,7 @@
 set -eou pipefail
 
 echo "Updating all git submodules"
-#git submodule update --init --recursive
+git submodule update --init --recursive
 
 cwd=`pwd`
 
